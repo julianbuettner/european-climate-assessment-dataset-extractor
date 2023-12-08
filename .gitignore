@@ -1,0 +1,9 @@
+/target
+
+# Archives
+*.zip
+*.xz
+
+# Logs
+*.log
+*.txt
