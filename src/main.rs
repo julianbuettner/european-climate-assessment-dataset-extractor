@@ -52,16 +52,18 @@ fn line_to_entry(line: &str) -> Option<Entry> {
     })
 }
 
-
-// plan 
+// plan
 // => Station Id mappen auf koordinaten
 // => koordinaten in Detailgrad von 2° auflösen (52° - 54°)
 // => Durchschnitt erheben für Jede Kategorie
 //  TODO: TX klassen abchecken
 // => als CSV ausgeben
 
+// use elements.txt, sources.txt, stations.txt,
+// similiar for all categories
+
 fn main() {
-    let file = fs::File::open("ECA_blend_fg.zip").unwrap();
+    let file = fs::File::open("ECA_blend_tx.zip").unwrap();
     let mut zip = zip::ZipArchive::new(file).unwrap();
 
     let max_tx = 21;
@@ -72,8 +74,11 @@ fn main() {
     for i in 0..zip.len() {
         let mut zf = zip.by_index(i).unwrap();
 
+        if zf.name().chars().take(2).all(|char| char.is_uppercase()) {
+            continue;
+        }
         println!("====== FIle {}", zf.name());
-        std::io::copy(&mut zf, &mut std::io::stdout()).unwrap();
+        // std::io::copy(&mut zf, &mut std::io::stdout()).unwrap();
         // let re = BufReader::new(zf);
         // for line in re.lines() {
         //     let line = line.unwrap();
